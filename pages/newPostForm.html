@@ -20,20 +20,21 @@
         </div>
         <div class="d-flex flex-column bg-light border border-secondary-subtle rounded p-2 mt-3">
             <div class="">
-                <label id="cover" type="file" class="input-group-text border btn btn-file border-2 border-secondary-subtle fs-6 fw-semibold" for="inputGroupFile01">
+                <h4>
                     Add a cover image
-                </label>
+                </h4>
+                <input class="form-control" type="file" id="cover">
             </div>
-            <div id="postsColumn">
+            <form id="postsColumn">
                 <textarea class="form-control fs-2 fw-bold border-white my-3" rows="1" 
                 id="title" name="title" placeholder="New post title here..."></textarea>
                 <textarea class="form-control bg-body-secondary" rows="1" 
                 id="tags" name="tags" placeholder="Add up to 4 tags..."></textarea>
                 <textarea class="form-control fs-5 font-monospace" rows="20" 
                 id="body" name="body" placeholder="Write your post content here..."></textarea>
-            </div>
+            </form>
             <div class="col col-1 m-2 mr-0">
-                <a class="btn btnPurple" href="../index.html">Submit</a>
+                <button id="submitBtn" class="btn btnPurple" href="../index.html">Submit</button>
             </div>
             
         </div>
@@ -44,6 +45,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" 
     crossorigin="anonymous"></script>
-    <script src=""></script>
+    <script src="../js/createPost.js"></script>
 </body>
 </html>

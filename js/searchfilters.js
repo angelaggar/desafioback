@@ -3,7 +3,6 @@ import { cardGen, postFirstShow } from './postDom.js'
 
 const postList = postNew()
 const titlesList = postList.map((item) => item.title.toLowerCase())
-
 const cardColumn = document.getElementById('cardColumn')
 
 const searchInput = document.getElementById('searchInput')
