@@ -2,6 +2,12 @@ const btnLogin = document.getElementById('loginButton');
 const inpEmail = document.getElementById('inputEmail');
 const inpPassword = document.getElementById('inputPassword');
 
+/**
+ * TODO
+ * agregar las clases para ocultar el login y mostrar el logout y viceversa, 
+ * la función para que el logout que login dirija a la pantalla principal
+ */
+
 async function userLogin(eMail, password) {
 
     let body = {
@@ -25,8 +31,8 @@ async function userLogin(eMail, password) {
     if(!token){
         alert('Unauthorized User');
     } else {
-        alert('Login exitoso');
         localStorage.token = token;
+        window.location.replace('/')
     }
 
 }
