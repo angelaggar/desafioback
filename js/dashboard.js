@@ -4,14 +4,16 @@ const options = {
 }
 fetch ('http://localhost:3002/post', options)
 .then(response => {
+    console.log(response)
     if (!response.ok) {
         throw new Error('Error al obtener los datos');
     }
     return response.json();
     })
     .then(data => {
+        console.log(data)
         const cardsContainer = document.getElementById('cards-container');
-        data.forEach(post => {
+        data.data.forEach(post => {
             const card = document.createElement('div');
             card.classList.add('col-md-6');
             card.innerHTML = `
