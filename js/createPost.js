@@ -11,12 +11,14 @@ const createPost = async () => {
 
     fetch(POST_ENDPOINT, {
       method: 'Post',
-      body: {
-        title: inpTitle,
-        tags: inpTags,
-        content: inpContent,
-        cover: inpCover
-      },
+      body: JSON.stringify(
+        {
+          title: inpTitle,
+          tags: inpTags,
+          content: inpContent,
+          cover: inpCover
+        }
+      ),
       headers: {
         authorization: `Bearer ${token}`
       }
