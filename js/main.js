@@ -5,4 +5,5 @@ import { searchPost } from './searchfilters.js'
 
 document.addEventListener('DOMContentLoaded', async() => {
   await postNew()
+  openPost()
 })
