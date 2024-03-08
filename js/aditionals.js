@@ -1,4 +1,5 @@
 import { allPost } from './database.js'
+import { cardGen } from './postDom.js'
 
 export const dateGen = () => {
   const dia = Math.floor(Math.random() * 30)
@@ -13,26 +14,25 @@ export const dateGen = () => {
 
 const postsArray = await allPost()
 
-export const postNew = () => {
-  const newList = []
-  postsArray.forEach((item) => {
-    const info = dateGen()
-    const user = {
-      id: item.id,
-      title: item.title,
-      body: item.body,
-      reactions: item.reactions,
-      tags: item.tags,
-      cover: 'https://picsum.photos/600/400',
-      dateinfo: dateGen(),
-      date: `${info.dia}/${info.mes}/2023`,
-      comment: Math.floor(Math.random() * 30),
-      user: 'Jhon Wayne',
-      avatar: 'https://randomuser.me/api/portraits/men/60.jpg'
-    }
-    newList.push(user)
-  })
-  return newList
+export const postNew = async () => {
+  const options = {
+      method: 'GET',
+  }
+  fetch ('http://localhost:3002/post', options)
+  .then(response => {
+      if (!response.ok) {
+          throw new Error('Error al obtener los datos');
+      }
+      return response.json();
+      })
+      .then(data => {
+        data.data.forEach(post => {
+          cardGen(post)
+        });
+      })
+  .catch(error => {
+      console.error('Error de solicitud:', error);
+      })
 }
 
 export const openPost = () => {
