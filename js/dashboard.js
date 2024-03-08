@@ -2,7 +2,8 @@ console.log('Hola mundo')
 const options = {
     method: 'GET',
 }
-fetch ('http://localhost:3002/post', options)
+
+fetch (`http://localhost:3002/post`, options)
 .then(response => {
     if (!response.ok) {
         throw new Error('Error al obtener los datos');
@@ -11,7 +12,7 @@ fetch ('http://localhost:3002/post', options)
     })
     .then(data => {
         const cardsContainer = document.getElementById('cards-container');
-        data.forEach(post => {
+        data.data.forEach(post => {
             const card = document.createElement('div');
             card.classList.add('col-md-6');
             card.innerHTML = `
