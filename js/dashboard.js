@@ -17,10 +17,11 @@ fetch ('http://localhost:3002/post', options)
             card.innerHTML = `
                 <div class="card mb-4">
                     <div class="card-body bg-light-subtle">
+                        
                         <h5 class="card-title">${post.title}</h5>
                         <div class="d-flex justify-content-center">
                             <a href="#" class="btn btn-danger ms-2">Eliminar</a>
-                            <a href="#" class="btn btn-primary ms-2">Editar</a>
+                            <a href="./newPostForm.html" id="editbutton" class="btn btn-primary ms-2">Editar</a>
                         </div>
                     </div>
                 </div>
