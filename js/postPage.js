@@ -4,7 +4,7 @@ const postBody = document.getElementById('postBody');
 const authorBox = document.getElementById('authorBox');
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const postId = sessionStorage.getItem('postId');
+  const postId = localStorage.getItem('postId')
   console.log(postId);
 
   await fetch (`http://localhost:3002/post/${postId}`, {
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   })
   .then(response => {
     if (!response.ok) {
-      throw new Error('Error al obtener los datos');
+      throw new Error('Error al obtener los datos')
     }
     return response.json();
   })
@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     postBody.innerHTML = post.content
   })
   .catch(error => {
-    console.error('Error de solicitud:', error);
-  });
-});
+    console.error('Error de solicitud:', error)
+  })
+  window.addEventListener('beforeunload', () => {
+    localStorage.removeItem('postId');
+  })
+})
