@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', async() => {
   const loggedDiv = document.getElementById('loggedBoxNav');
 
   if(localStorage.token){
-    btnLogin.classList.add('display-none');
-    btnCreateAccount.classList.add('display-none');
+    btnLogin.classList.add('d-none');
+    btnCreateAccount.classList.add('d-none');
   } else {
-    loggedDiv.classList.add('display-none');
+    loggedDiv.classList.add('d-none');
   }
 
 })

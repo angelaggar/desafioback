@@ -1,6 +1,7 @@
 const btnLogin = document.getElementById('loginButton');
 const inpEmail = document.getElementById('inputEmail');
 const inpPassword = document.getElementById('inputPassword');
+const lblWarnData = document.getElementById('warnEnterData');
 
 /**
  * TODO
@@ -29,7 +30,8 @@ async function userLogin(eMail, password) {
     const token = userData.data;
 
     if(!token){
-        alert('Unauthorized User');
+      lblWarnData.textContent = 'Email and Password are incorrect. Try Again!!!'
+      lblWarnData.classList.remove('d-none');
     } else {
         localStorage.token = token;
         window.location.replace('/')
@@ -42,6 +44,12 @@ btnLogin.addEventListener('click', async () => {
     const email = inpEmail.value;
     const password = inpPassword.value;
 
-    await userLogin(email, password);
+    if(email === '' || password === '') {
+
+      lblWarnData.textContent = 'User and Password are required'
+      lblWarnData.classList.remove('d-none');
+
+    }
+    else await userLogin(email, password);
 
 })
