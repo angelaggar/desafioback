@@ -1,7 +1,8 @@
-import { postFirstShow } from './postDom.js'
-import { openPost } from './aditionals.js'
+// import { postFirstShow } from './postDom.js'
+import { openPost, postNew } from './aditionals.js'
 import { searchPost } from './searchfilters.js'
-import { createPost } from './createPost.js'
+// import { createPost } from './createPost.js'
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async() => {
+  await postNew()
 })

@@ -1,8 +1,5 @@
-import { postNew } from './aditionals.js'
-import { cardGen, postFirstShow } from './postDom.js'
+import { cardGen } from './postDom.js'
 
-const postList = postNew()
-const titlesList = postList.map((item) => item.title.toLowerCase())
 const cardColumn = document.getElementById('cardColumn')
 
 const searchInput = document.getElementById('searchInput')
@@ -12,36 +9,49 @@ const latest = document.getElementById('latest')
 const top = document.getElementById('top')
 
 // ///////////////// FUNCION PARA EL BOTON DE BUSQUEDA
-export const searchPost = () => {
+export const searchPost = async () => {
   const inputValue = searchInput.value.toLowerCase().split(/[ ,]+/)
-  const result = []
+  const options = {
+    method: 'GET',
+  }
 
-  titlesList.forEach((title, index) => {
-    const words = title.split(/[ ,]+/)
-    if (inputValue === words) return result.push(postList[index])
-    if (inputValue.some((word) => words.includes(word))) { result.push(postList[index]) }
-  })
-  return result
-}
-
-const printSearch = () => {
-  cardColumn.innerHTML = ''
-  const searchResult = searchPost()
-  searchResult.forEach((item) => {
-    console.log(cardGen(item))
-  })
+  fetch('http://localhost:3002/post', options)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error al obtener los datos');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const postList = data.data
+      cardColumn.innerHTML = '';
+      
+      postList.forEach((item) => {
+        const title = item.title.toLowerCase();
+        const words = title.split(/[ ,]+/);
+        
+        const matches = inputValue.some(word => words.includes(word));
+        
+        if (matches) {
+          cardGen(item);
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error de solicitud:', error);
+    });
 }
 
 searchInput.addEventListener('keyup', (event) => {
   if (event.key === 'Enter') {
-    event.preventDefault()
-    printSearch()
+    event.preventDefault();
+    searchPost();
   }
-})
+});
 
 searchButton.addEventListener('click', () => {
-  printSearch()
-})
+  searchPost();
+});
 
 // //////////////////// FUNCION PARA RELEVANT PAGE, MUESTRA LOS POSTS CON MAS REACCIONES
 export const relevantPage = () => {
@@ -101,4 +111,3 @@ const compareDate = () => {
   
 }
 
-console.log(compareDate())
