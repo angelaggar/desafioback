@@ -1,4 +1,5 @@
 import { cardGen } from './postDom.js'
+import { postNew } from './aditionals.js'
 
 const cardColumn = document.getElementById('cardColumn')
 
@@ -38,8 +39,8 @@ export const searchPost = async () => {
       });
     })
     .catch(error => {
-      console.error('Error de solicitud:', error);
-    });
+      console.error('Error de solicitud:', error)
+    })
 }
 
 searchInput.addEventListener('keyup', (event) => {
@@ -55,59 +56,84 @@ searchButton.addEventListener('click', () => {
 
 // //////////////////// FUNCION PARA RELEVANT PAGE, MUESTRA LOS POSTS CON MAS REACCIONES
 export const relevantPage = () => {
-  const relevants = []
-  const reaction = postList
-    .map((item) => item.reactions)
-    .sort()
-    .reverse() // busca el num de react mas grande
-  let reactNum = reaction[0]
-  while (reactNum >= 0) {
-    if (reactNum < 0) break
-    const clasify = () => {
-      const posts = postList.filter((post) => post.reactions === reactNum)
-      relevants.push(posts)
-    }
-    clasify()
-    reactNum -= 1
+  const options = {
+    method: 'GET',
   }
-  return relevants.flat()
+  fetch ('http://localhost:3002/post', options)
+  .then(response => {
+      if (!response.ok) {
+          throw new Error('Error al obtener los datos');
+      }
+      return response.json();
+      })
+      .then(data => {
+        const postList = data.data
+        cardColumn.innerHTML = ''
+        const randomOrder = () => Math.random() - 0.5
+        postList.sort(randomOrder).forEach(post => {
+          cardGen(post)
+        });
+      })
+  .catch(error => {
+      console.error('Error de solicitud:', error);
+      })
 }
 
-relevant.addEventListener('click', () => {
+relevant.addEventListener('click', async () => {
   cardColumn.innerHTML = ''
-  const relevants = relevantPage()
-  relevants.forEach((item) => cardGen(item))
+  relevantPage()  
 })
 
 // ////////////////// FUNCION PARA TOP PAGE, MUESTRA LOS POST CON MAS COMENTARIOS
-export const topPage = () => {
-  const topPosts = []
-  const comments = postList
-    .map((item) => item.comment)
-    .sort((a, b) => (a > b ? -1 : 1))
-  console.log(comments)
-  let totalCom = comments[0]
-  while (totalCom >= 0) {
-    if (totalCom < 0) break
-    const clasify = () => {
-      const comments = postList.filter((post) => post.comment === totalCom)
-      topPosts.push(comments)
-    }
-    clasify()
-    totalCom -= 1
-  }
-  return topPosts.flat()
-}
+// export const topPage = () => {
+//   const topPosts = []
+//   const comments = postList
+//     .map((item) => item.comment)
+//     .sort((a, b) => (a > b ? -1 : 1))
+//   console.log(comments)
+//   let totalCom = comments[0]
+//   while (totalCom >= 0) {
+//     if (totalCom < 0) break
+//     const clasify = () => {
+//       const comments = postList.filter((post) => post.comment === totalCom)
+//       topPosts.push(comments)
+//     }
+//     clasify()
+//     totalCom -= 1
+//   }
+//   return topPosts.flat()
+// }
 
 top.addEventListener('click', () => {
   cardColumn.innerHTML = ''
-  const topPosts = topPage()
-  topPosts.forEach((item) => cardGen(item))
+  postNew()
 })
 
 // /////////////// FUNCION PARA LATEST, MUESTRA LOS POSTS MAS RECIENTES
 
-const compareDate = () => {
+const latestPage = async() => {
+  const options = {
+    method: 'GET',
+  }
+  fetch ('http://localhost:3002/post', options)
+  .then(response => {
+      if (!response.ok) {
+          throw new Error('Error al obtener los datos');
+      }
+      return response.json();
+      })
+      .then(data => {
+        data.data.reverse().forEach(post => {
+          cardGen(post)
+        });
+      })
+  .catch(error => {
+      console.error('Error de solicitud:', error);
+      })
   
 }
 
+latest.addEventListener('click', () => {
+  cardColumn.innerHTML = ''
+  latestPage()
+})
