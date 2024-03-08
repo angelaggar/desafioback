@@ -1,17 +1,25 @@
 const createPost = async () => {
-  const USER_ENDPOINT = 'http://localhost:3002/post/'
-
   const submit = document.getElementById('submitBtn')
   const POST_ENDPOINT = 'http://localhost:3002/post/'
-  submit.addEventListener('submit', (event) => {
+  submit.addEventListener('submit', async (event) => {
     event.preventDefault()
-    const title = document.getElementById('title').value
-    const tags = document.getElementById('tags').value
-    const body = document.getElementById('body').value
-    const cover = document.getElementById('cover').value
+    const inpTitle = document.getElementById('title').value
+    const inpTags = document.getElementById('tags').value
+    const inpContent = document.getElementById('body').value
+    const inpCover = document.getElementById('cover').value
+    const token = localStorage.getItem('token')
 
     fetch(POST_ENDPOINT, {
-
+      method: 'Post',
+      body: {
+        title: inpTitle,
+        tags: inpTags,
+        content: inpContent,
+        cover: inpCover
+      },
+      headers: {
+        authorization: `Bearer ${token}`
+      }
     })
     // window.location.href = '../index.html'
   })
