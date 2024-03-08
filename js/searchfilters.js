@@ -24,18 +24,15 @@ export const searchPost = async () => {
     })
     .then(data => {
       const postList = data.data
-      // Limpiar el contenido actual del cardColumn
       cardColumn.innerHTML = '';
       
       postList.forEach((item) => {
         const title = item.title.toLowerCase();
         const words = title.split(/[ ,]+/);
         
-        // Comprobar si alguna palabra de la búsqueda está presente en el título
         const matches = inputValue.some(word => words.includes(word));
         
         if (matches) {
-          // Si hay coincidencia, generar una tarjeta y agregarla al cardColumn
           cardGen(item);
         }
       });
