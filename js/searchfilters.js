@@ -1,8 +1,5 @@
-import { postNew } from './aditionals.js'
-import { cardGen, postFirstShow } from './postDom.js'
+import { cardGen } from './postDom.js'
 
-const postList = postNew()
-// const titlesList = postList.map((item) => console.log(item.title.toLowerCase()))
 const cardColumn = document.getElementById('cardColumn')
 
 const searchInput = document.getElementById('searchInput')
@@ -117,4 +114,3 @@ const compareDate = () => {
   
 }
 
-console.log(compareDate())

@@ -1,7 +1,7 @@
-import { postNew, openPost } from './aditionals.js'
-import { searchPost } from './searchfilters.js'
+// import { postNew, openPost } from './aditionals.js'
+// import { searchPost } from './searchfilters.js'
 
-const newPostList = postNew()
+// // const newPostList = postNew()
 
 // /// ///////////Generador de cards///////////////////
 const cardColumn = document.getElementById('cardColumn')
@@ -81,8 +81,8 @@ export const cardGen = (post) => {
   return post._id
 }
 
-export const postFirstShow = async () => {
-  await newPostList.forEach((item) => cardGen(item))
-}
+// export const postFirstShow = async () => {
+//   await newPostList.map((item) => item)
+// }
 
-postFirstShow()
+// postFirstShow()
