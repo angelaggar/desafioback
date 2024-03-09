@@ -6,4 +6,19 @@ import { searchPost } from './searchfilters.js'
 document.addEventListener('DOMContentLoaded', async() => {
   await postNew()
   openPost()
+
+  /**
+   * Login Logic
+   */
+  const btnLogin = document.getElementById('loginButton');
+  const btnCreateAccount = document.getElementById('createAccountButton');
+  const loggedDiv = document.getElementById('loggedBoxNav');
+
+  if(localStorage.token){
+    btnLogin.classList.add('d-none');
+    btnCreateAccount.classList.add('d-none');
+  } else {
+    loggedDiv.classList.add('d-none');
+  }
+
 })
