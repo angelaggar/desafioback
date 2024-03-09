@@ -18,6 +18,7 @@ fetch(`http://localhost:3002/post`, options)
       card.innerHTML = `
                 <div class="card mb-4">
                     <div class="card-body bg-light-subtle">
+                        
                         <h5 class="card-title">${post.title}</h5>
                         <div class="d-flex justify-content-center">
                             <a id="delete-${post._id}" href="#" class="btn btn-danger ms-2">Eliminar</a>
