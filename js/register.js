@@ -10,13 +10,8 @@ const signUpForm = document.getElementById('signUpForm');
       const profileImage = document.getElementById('profileImage').value;
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
-      
-      await fetch('http://localhost:3002/user/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
+
+      let body = {
           first_name: firstName,
           last_name: lastName,
           email: email,
@@ -24,12 +19,20 @@ const signUpForm = document.getElementById('signUpForm');
           password: password,
           phone: phone,
           profile_picture: profileImage
-        })
-      }).then(response => console.log(response))
+      }
 
-      // if (!response.ok) {
-      //   throw new Error('Error al enviar los datos al servidor')
-      // }
+      const response = await fetch('http://localhost:3002/user/', {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const userData = await response.json();
+
+      window.location.replace('/pages/loginForm.html');
+
     } catch (error) {
       console.log('Error:', error)
     }
