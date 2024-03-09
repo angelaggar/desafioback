@@ -3,39 +3,44 @@ const inpEmail = document.getElementById('inputEmail');
 const inpPassword = document.getElementById('inputPassword');
 const lblWarnData = document.getElementById('warnEnterData');
 
-/**
- * TODO
- * agregar las clases para ocultar el login y mostrar el logout y viceversa, 
- * la función para que el logout que login dirija a la pantalla principal
- */
-
 async function userLogin(eMail, password) {
 
-    let body = {
-      email: `${eMail}`,
-      password: `${password}`
-    }
+  console.log('Entre')
 
-    const response = await fetch('http://localhost:3002/user/login', {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json'
+    try {
+      
+      let body = {
+        email: `${eMail}`,
+        password: `${password}`
       }
-    });
+  
+      const response = await fetch('http://localhost:3002/user/login', {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      const userData = await response.json();
+      const token = userData.data.token;
+      const userId = userData.data.userId;
+  
+      if(!token){
+        lblWarnData.textContent = 'Email and Password are incorrect. Try Again!!!'
+        lblWarnData.classList.remove('d-none');
+      } else {
+          localStorage.token = token;
+          localStorage.userId = userId;
+          window.location.replace('/');
+      }
 
-    const userData = await response.json();
+    } catch (error) {
 
-    console.log(userData);
-    const token = userData.data;
-
-    if(!token){
-      lblWarnData.textContent = 'Email and Password are incorrect. Try Again!!!'
-      lblWarnData.classList.remove('d-none');
-    } else {
-        localStorage.token = token;
-        window.location.replace('/')
+      console.log(error);
+      
     }
+
 
 }
 
