@@ -24,17 +24,18 @@ export const postNew = async () => {
 
 export const openPost = () => {
   const cardColumn = document.getElementById('cardColumn')
+  // const cardContainer = document.querySelector('div[name="cardContainer"]')
   cardColumn.addEventListener('dblclick', (event) => {
     let targetNode = event.target
     if (targetNode.tagName !== 'a') event.preventDefault()
     while (targetNode) {
       if (targetNode.id) {
-        console.log(targetNode.id)
-        window.location.href = `./pages/post.html?id=${targetNode.id}`
+        const postId = targetNode.id;
+        localStorage.setItem('postId', postId)
+        window.location.href = `./pages/post.html?id=${postId}`
         break
       }
       targetNode = targetNode.parentNode
     }
   })
 }
-
