@@ -1,13 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
   const urlParams = new URLSearchParams(window.location.search);
   const postId = urlParams.get("id");
+  const authToken = localStorage.getItem("token");
 
-  if (postId) {
-    //Token de autenticacion
-    const authToken = localStorage.getItem("authToken");
+  const options = {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  };
 
-    fetch(`http://localhost:3002/post/${postId}`)
-      .then((response) => response.json())
+  if (postId && authToken) {
+    fetch(`http://localhost:3002/post/${postId}`, options)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error fetch");
+        }
+        return response.json();
+      })
       .then((postData) => {
         document.getElementById("title").value = postData.message.title;
         document.getElementById("tags").value = postData.message.tags;
@@ -16,30 +25,36 @@ document.addEventListener("DOMContentLoaded", function () {
         const coverImage = document.getElementById("coverImage");
         coverImage.src = postData.message.cover;
       })
-      .catch((error) => console.error("Error fetching post data:", error));
+      .catch((error) => console.error("Error fetch:", error));
   } else {
-    console.error("Post ID is null");
+    console.error("Post ID o token vacios");
   }
 
   document.getElementById("updateBtn").addEventListener("click", function () {
-    const authToken = localStorage.getItem("authToken");
-
-    fetch(`http://localhost:3002/post/${postId}`, {
+    const updateOptions = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({
         title: document.getElementById("title").value,
         tags: document.getElementById("tags").value,
         content: document.getElementById("body").value,
       }),
-    })
-      .then((response) => response.json())
+    };
+
+    fetch(`http://localhost:3002/post/${postId}`, updateOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error updating post");
+        }
+        return response.json();
+      })
       .then((updatedData) => {
-        console.log("Post actualizado correctamente:", updatedData);
+        console.log("Post updated successfully:", updatedData);
         window.location.href = "../index.html";
       })
-      .catch((error) => console.error("Error al actualizar el post:", error));
+      .catch((error) => console.error("Error updating post:", error));
   });
 });
